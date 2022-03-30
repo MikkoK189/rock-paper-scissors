@@ -1,3 +1,16 @@
+const rps = ["Rock", "Paper", "Scissors"];
+let playerSelection = "";
+
+const buttons = document.querySelectorAll("button");
+console.log(buttons);
+
+buttons.forEach((button) => addEventListener("click", buttonClicked));
+
+function buttonClicked(e) {
+  playerSelection = rps[e.target.id];
+  console.log(`Player selected ${playerSelection}`);
+}
+
 const computerPlay = function () {
   const computerPlaying = ["Rock", "Paper", "Scissors"];
 
@@ -50,7 +63,7 @@ function playRound(playerSelection, computerSelection) {
 function game() {
   let playerScore = 0;
   let computerScore = 0;
-  for (let i = 0; i < 5; i++) {
+  /*   for (let i = 0; i < 5; i++) {
     let roundNumber = i;
     let playerSelection = prompt("Rock, Paper or Scissors?");
     let result = playRound(playerSelection, computerPlay());
@@ -64,7 +77,7 @@ function game() {
       console.log(`Tie on round ${(roundNumber += 1)}`);
     }
   }
-
+ */
   if (playerScore > computerScore) {
     console.log(`Player wins with a score of ${playerScore}!`);
   } else if (computerScore > playerScore) {
