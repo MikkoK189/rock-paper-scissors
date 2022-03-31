@@ -1,20 +1,43 @@
 const rps = ["Rock", "Paper", "Scissors"];
 let playerSelection = "";
+let playerScore = 0;
+let computerScore = 0;
+let roundNumber = 1;
 
 const buttons = document.querySelectorAll("button");
-console.log(buttons);
+const textBox = document.querySelector(".text-box");
 
-buttons.forEach((button) => addEventListener("click", buttonClicked));
+buttons.forEach((button) => button.addEventListener("click", buttonClicked));
 
 function buttonClicked(e) {
   playerSelection = rps[e.target.id];
+  console.log(e.target.id);
   console.log(`Player selected ${playerSelection}`);
+  let computerPick = computerPlay();
+  textBox.classList.remove("hidden");
+  textBox.textContent = checkResult(
+    playRound(playerSelection, computerPick),
+    playerSelection,
+    computerPick
+  );
+
+  roundNumber++;
+}
+
+function checkResult(game, playerSelection, computerSelection) {
+  if (game == "Win!") {
+    playerScore++;
+    return `Player wins with ${playerSelection.toLowerCase()}!`;
+  } else if (game == "Lose") {
+    computerScore++;
+    return `Computer wins with ${computerSelection.toLowerCase()}!`;
+  } else {
+    return "Tie!";
+  }
 }
 
 const computerPlay = function () {
-  const computerPlaying = ["Rock", "Paper", "Scissors"];
-
-  return computerPlaying[Math.trunc(Math.random() * computerPlaying.length)];
+  return rps[Math.trunc(Math.random() * rps.length)];
 };
 
 function playRound(playerSelection, computerSelection) {
@@ -55,29 +78,7 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-// const playerSelection = "rock";
-// const computerSelection = computerPlay();
-
-// console.log(playRound(playerSelection, computerSelection));
-
 function game() {
-  let playerScore = 0;
-  let computerScore = 0;
-  /*   for (let i = 0; i < 5; i++) {
-    let roundNumber = i;
-    let playerSelection = prompt("Rock, Paper or Scissors?");
-    let result = playRound(playerSelection, computerPlay());
-    if (result == "Win!") {
-      playerScore++;
-      console.log(`Player wins round ${(roundNumber += 1)}`);
-    } else if (result == "Lose") {
-      computerScore++;
-      console.log(`Computer wins round ${(roundNumber += 1)}`);
-    } else {
-      console.log(`Tie on round ${(roundNumber += 1)}`);
-    }
-  }
- */
   if (playerScore > computerScore) {
     console.log(`Player wins with a score of ${playerScore}!`);
   } else if (computerScore > playerScore) {
@@ -87,4 +88,4 @@ function game() {
   }
 }
 
-game();
+// game();
