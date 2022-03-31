@@ -3,16 +3,17 @@ let playerSelection = "";
 let playerScore = 0;
 let computerScore = 0;
 let roundNumber = 1;
+let gameOver = false;
 
 const buttons = document.querySelectorAll("button");
 const textBox = document.querySelector(".text-box");
+const scoreBox = document.querySelector(".score-box");
 
 buttons.forEach((button) => button.addEventListener("click", buttonClicked));
 
 function buttonClicked(e) {
+  if (gameOver) return;
   playerSelection = rps[e.target.id];
-  console.log(e.target.id);
-  console.log(`Player selected ${playerSelection}`);
   let computerPick = computerPlay();
   textBox.classList.remove("hidden");
   textBox.textContent = checkResult(
@@ -20,8 +21,23 @@ function buttonClicked(e) {
     playerSelection,
     computerPick
   );
-
+  scoreBox.classList.remove("hidden");
+  scoreBox.textContent = `Round: ${roundNumber} score: ${playerScore} - ${computerScore}`;
   roundNumber++;
+  if (roundNumber == 6) {
+    endGame();
+  }
+}
+
+function endGame() {
+  if (playerScore > computerScore) {
+    scoreBox.textContent = `Player wins with a score of ${playerScore}!`;
+  } else if (computerScore > playerScore) {
+    scoreBox.textContent = `Computer wins with a score of ${computerScore}!`;
+  } else {
+    scoreBox.textContent = "Tie!";
+  }
+  gameOver = true;
 }
 
 function checkResult(game, playerSelection, computerSelection) {
@@ -77,15 +93,3 @@ function playRound(playerSelection, computerSelection) {
       break;
   }
 }
-
-function game() {
-  if (playerScore > computerScore) {
-    console.log(`Player wins with a score of ${playerScore}!`);
-  } else if (computerScore > playerScore) {
-    console.log(`Computer wins with a score of ${computerScore}!`);
-  } else {
-    console.log("Tie!");
-  }
-}
-
-// game();
